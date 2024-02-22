@@ -1,6 +1,8 @@
+using ReactiveUI;
+
 namespace DXHRDCHudScaler.ViewModels;
 
-public interface IExtrasTabViewModel
+public interface IExtrasTabViewModel : IRoutableViewModel
 {
     uint Fov { get; set; }
 }

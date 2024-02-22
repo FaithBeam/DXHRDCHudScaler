@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using DXHRDCHudScaler.Core;
 using DXHRDCHudScaler.Core.Models;
@@ -32,6 +33,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     private bool _modalOpen;
 
     public MainTabViewModel(
+        IScreen screen,
         IResolutionService resolutionService,
         IGetGameRenderResolutionService gameRenderResolutionService,
         IPatchService patchService,
@@ -40,6 +42,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         IFindDxhrdcExeService findDxhrdcExeService
     )
     {
+        HostScreen = screen;
         _resolutionService = resolutionService;
         _patchService = patchService;
         _backupDxhrdcService = backupDxhrdcService;
@@ -217,4 +220,6 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     public Interaction<Unit, Resolution?> AddResolutionInteraction { get; }
     public Interaction<Unit, IStorageFile?> BrowseInteraction { get; }
     public Interaction<GenericDialogViewModel, Unit> GenericDialogInteraction { get; }
+    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString()[..5];
+    public IScreen HostScreen { get; set; }
 }

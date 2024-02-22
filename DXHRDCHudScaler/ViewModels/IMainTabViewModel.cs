@@ -7,7 +7,7 @@ using ReactiveUI;
 
 namespace DXHRDCHudScaler.ViewModels;
 
-public interface IMainTabViewModel
+public interface IMainTabViewModel : IRoutableViewModel
 {
     string? ModalText { get; set; }
     string? BrowseTextBox { get; set; }

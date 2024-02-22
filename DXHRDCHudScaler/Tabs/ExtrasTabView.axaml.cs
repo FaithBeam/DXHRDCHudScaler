@@ -11,7 +11,6 @@ public partial class ExtrasTabView : ReactiveUserControl<IExtrasTabViewModel>
 {
     public ExtrasTabView()
     {
-        InitializeComponent();
         this.WhenActivated(d =>
         {
             if (ViewModel == null)
@@ -19,5 +18,6 @@ public partial class ExtrasTabView : ReactiveUserControl<IExtrasTabViewModel>
                 return;
             }
         });
+        InitializeComponent();
     }
 }

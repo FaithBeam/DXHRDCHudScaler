@@ -20,8 +20,9 @@ public class ExtrasTabViewModel : ViewModelBase, IExtrasTabViewModel
     private uint _fov;
     private SourceCache<Job, string> _jobCache = new(x => x.Name);
 
-    public ExtrasTabViewModel(IFovService fovService)
+    public ExtrasTabViewModel(IScreen screen, IFovService fovService)
     {
+        HostScreen = screen;
         _fovService = fovService;
 
         uint initialFov;
@@ -92,6 +93,8 @@ public class ExtrasTabViewModel : ViewModelBase, IExtrasTabViewModel
 
     public ReactiveCommand<Unit, Unit> ResetFovCmd { get; }
     public ReactiveCommand<Unit, Unit> ApplyCmd { get; }
+    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString()[..5];
+    public IScreen HostScreen { get; }
 
     /// <summary>
     /// If the job cache has any items, that means there are changes that could be applied and therefore the apply button should be enabled.

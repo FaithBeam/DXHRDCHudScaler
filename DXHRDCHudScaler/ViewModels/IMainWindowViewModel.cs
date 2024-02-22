@@ -1,7 +1,10 @@
+﻿using System.Reactive;
+using ReactiveUI;
+
 namespace DXHRDCHudScaler.ViewModels;
 
-public interface IMainWindowViewModel
+public interface IMainWindowViewModel : IScreen
 {
-    IMainTabViewModel MainTabViewModel { get; }
-    IExtrasTabViewModel ExtrasTabViewModel { get; }
+    ReactiveCommand<Unit, IRoutableViewModel> GoToExtras { get; }
+    ReactiveCommand<Unit, IRoutableViewModel> GoToMain { get; }
 }
