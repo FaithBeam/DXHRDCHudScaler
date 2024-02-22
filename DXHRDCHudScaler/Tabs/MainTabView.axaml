@@ -1,0 +1,42 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:DXHRDCHudScaler.ViewModels"
+             xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:MainTabViewModel"
+             x:Class="DXHRDCHudScaler.Tabs.MainTabView">
+    
+    <Design.DataContext>
+        <vm:MainTabViewModel />
+    </Design.DataContext>
+    
+    <dialogHost:DialogHost CloseOnClickAway="True" IsOpen="{Binding ModalOpen}">
+        <dialogHost:DialogHost.DialogContent>
+            <Label Content="{Binding ModalText}" />
+        </dialogHost:DialogHost.DialogContent>
+        <StackPanel>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding BrowseTextBox}" />
+                <Button Grid.Column="1" Content="Browse" Command="{Binding BrowseCmd}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                <StackPanel>
+                    <Label Content="Scale Width" />
+                    <ComboBox ItemsSource="{Binding Resolutions}"
+                              SelectedItem="{Binding SelectedResolution}"
+                              HorizontalAlignment="Stretch">
+                        <ToolTip.Tip>
+                            <TextBlock Text="{Binding ResolutionComboToolTip}" />
+                        </ToolTip.Tip>
+                    </ComboBox>
+                </StackPanel>
+                <Button Grid.Column="1" Content="Add Resolution" Command="{Binding AddResolutionCmd}"
+                        VerticalAlignment="Bottom" />
+                <Button Grid.Column="2" Content="Patch" Command="{Binding PatchCmd}" VerticalAlignment="Bottom" />
+                <Button Grid.Column="3" Content="Uninstall" Command="{Binding UninstallCmd}" VerticalAlignment="Bottom" />
+            </Grid>
+        </StackPanel>
+    </dialogHost:DialogHost>
+</UserControl>

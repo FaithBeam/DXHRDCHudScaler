@@ -1,0 +1,31 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:DXHRDCHudScaler.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DXHRDCHudScaler.Dialogs.AddResolutionDialog"
+        x:DataType="vm:AddResolutionDialogViewModel"
+        SizeToContent="WidthAndHeight"
+        Icon="/Assets/dxhrdc-icon.ico"
+        Title="Add Resolution">
+    <Design.DataContext>
+        <vm:AddResolutionDialogViewModel />
+    </Design.DataContext>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel>
+            <Label Content="Width" />
+            <TextBox x:Name="WidthTextBox"
+                     Text="{Binding Width}" />
+        </StackPanel>
+        <StackPanel>
+            <ToolTip.Tip>
+                <TextBlock>% of the game's default width scaling (1280)</TextBlock>
+            </ToolTip.Tip>
+            <Label Content="Default Scale" />
+            <Label Content="{Binding Multiplier}" VerticalAlignment="Bottom"/>
+        </StackPanel>
+        <Button Content="Add" Command="{Binding AddCmd}" VerticalAlignment="Bottom" />
+        <Button Content="Cancel" Click="Button_OnClick" VerticalAlignment="Bottom"/>
+    </StackPanel>
+</Window>

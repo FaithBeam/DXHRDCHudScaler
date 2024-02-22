@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:DXHRDCHudScaler.ViewModels"
+        xmlns:tabs="clr-namespace:DXHRDCHudScaler.Tabs"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DXHRDCHudScaler.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/dxhrdc-icon.ico"
+        Width="500"
+        CanResize="False"
+        SizeToContent="Height"
+        Title="Deus Ex: Human Revolution - Director's Cut Hud Scaler">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <StyleInclude Source="../Styles/TabStyles.axaml" />
+    </Window.Styles>
+    
+    <TabControl x:Name="TabControl" Classes="p-0">
+        <TabItem x:Name="MainTabItem" Header="Main" Classes="tabitem">
+            <tabs:MainTabView DataContext="{Binding $parent.((vm:MainWindowViewModel)DataContext).MainTabViewModel}" />
+        </TabItem>
+        <TabItem x:Name="ExtrasTabItem" Header="Extras" Classes="tabitem">
+            <tabs:ExtrasTabView DataContext="{Binding $parent.((vm:MainWindowViewModel)DataContext).ExtrasTabViewModel}" />
+        </TabItem>
+    </TabControl>
+
+</Window>

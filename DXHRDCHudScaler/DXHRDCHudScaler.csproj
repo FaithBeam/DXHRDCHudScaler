@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <ApplicationIcon>Assets\dxhrdc-icon.ico</ApplicationIcon>
+        <AssemblyName>DXHRDC - Hud Scaler</AssemblyName>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.0.9" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.9" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.9" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.9" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.9" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.9" />
+        <PackageReference Include="DialogHost.Avalonia" Version="0.7.7" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+        <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.8.12" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\DXHRDCHudScaler.Core\DXHRDCHudScaler.Core.csproj" />
+      <ProjectReference Include="..\DXHRDCHudScaler.Windows\DXHRDCHudScaler.Windows.csproj" />
+    </ItemGroup>
+</Project>

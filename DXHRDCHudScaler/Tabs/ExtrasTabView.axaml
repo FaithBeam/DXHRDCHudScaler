@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:DXHRDCHudScaler.ViewModels"
+             xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             x:DataType="vm:ExtrasTabViewModel"
+             x:Class="DXHRDCHudScaler.Tabs.ExtrasTabView">
+    <Design.DataContext>
+        <vm:ExtrasTabViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*,Auto">
+        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto">
+            <Label Content="FOV" VerticalAlignment="Center" />
+            <Slider Grid.Column="1" x:Name="FovSlider" IsEnabled="{Binding FovSliderEnabled}" Value="{Binding Fov}" Minimum="1" Maximum="120"
+                    Ticks="{Binding Ticks}" IsSnapToTickEnabled="True" TickFrequency="1" VerticalAlignment="Center" MinWidth="100">
+            </Slider>
+            <Label Grid.Column="2" Content="{Binding Fov}" BorderThickness="0" VerticalAlignment="Center" />
+            <Button Grid.Column="3" Content="Reset" Command="{Binding ResetFovCmd}" >
+                <ToolTip.Tip>Sets the fov to 75 which is the game's default</ToolTip.Tip>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Button HorizontalAlignment="Right" Content="Apply" IsEnabled="{Binding ApplyBtnEnabled}" Command="{Binding ApplyCmd}" />
+        </Grid>
+    </Grid>
+</UserControl>
