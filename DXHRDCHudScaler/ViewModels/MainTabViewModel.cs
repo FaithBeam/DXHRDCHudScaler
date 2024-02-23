@@ -54,8 +54,6 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         BrowseCmd = ReactiveCommand.CreateFromTask(ShowOpenFileDialogAsync);
         BrowseInteraction = new Interaction<Unit, IStorageFile?>();
 
-        GenericDialogInteraction = new Interaction<GenericDialogViewModel, Unit>();
-
         var canPatch = this.WhenAnyValue(x => x.CanPatch, selector: canPatchBool => canPatchBool);
         PatchCmd = ReactiveCommand.CreateFromTask(PatchAsync, canPatch);
         _patchCmdIsExecuting = PatchCmd.IsExecuting.ToProperty(
@@ -87,7 +85,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         _uninstallCmdIsExecuting = UninstallCmd.IsExecuting.ToProperty(
             this,
             x => x.UninstallCmdIsExecuting,
-                                                            scheduler: RxApp.MainThreadScheduler
+            scheduler: RxApp.MainThreadScheduler
         );
         _canUninstall = this.WhenAnyValue(
                 x => x.BrowseTextBox,
@@ -219,7 +217,6 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     public ReactiveCommand<Unit, Unit> UninstallCmd { get; }
     public Interaction<Unit, Resolution?> AddResolutionInteraction { get; }
     public Interaction<Unit, IStorageFile?> BrowseInteraction { get; }
-    public Interaction<GenericDialogViewModel, Unit> GenericDialogInteraction { get; }
     public string? UrlPathSegment { get; } = Guid.NewGuid().ToString()[..5];
     public IScreen HostScreen { get; set; }
 }

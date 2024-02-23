@@ -26,5 +26,4 @@ public interface IMainTabViewModel : IRoutableViewModel
     ReactiveCommand<Unit, Unit> UninstallCmd { get; }
     Interaction<Unit, Resolution?> AddResolutionInteraction { get; }
     Interaction<Unit, IStorageFile?> BrowseInteraction { get; }
-    Interaction<GenericDialogViewModel, Unit> GenericDialogInteraction { get; }
 }

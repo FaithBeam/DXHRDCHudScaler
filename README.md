@@ -2,6 +2,10 @@
 
 This program scales DXHRDC's hud to any resolution. The game's hud stops scaling at 720p which causes it to look tiny on 4k displays. This program fixes that.
 
+![](https://i.imgur.com/xf3qJGe.png)
+
+[Before and after patch comparison](https://imgsli.com/MjQyMDk3)
+
 ## Usage
 
 1. Download the latest release matching your platform
