@@ -6,6 +6,7 @@ public class TestFindDxhrdcExeService
     public void TestTryFind()
     {
         var sut = new FindDxhrdcExeService();
-        sut.TryFind(out var path);
+        var result = sut.TryFind(out var path);
+        ;
     }
 }

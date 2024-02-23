@@ -8,6 +8,11 @@ public class FindDxhrdcExeService : IFindDxhrdcExeService
 {
     public bool TryFind(out string path)
     {
+        return TryFindDefault(out path) || TryFindGogInstall(out path);
+    }
+
+    private bool TryFindDefault(out string path)
+    {
         path = "";
         try
         {
@@ -37,6 +42,35 @@ public class FindDxhrdcExeService : IFindDxhrdcExeService
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+
+        return false;
+    }
+
+    private bool TryFindGogInstall(out string path)
+    {
+        path = "";
+        try
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                using var key = Registry.LocalMachine.OpenSubKey(
+                    @"SOFTWARE\WOW6432Node\GOG.com\Games\1370227705"
+                );
+                if (key is not null)
+                {
+                    var exeValue = key.GetValue("exe")?.ToString();
+                    if (!string.IsNullOrWhiteSpace(exeValue))
+                    {
+                        path = exeValue;
+                        return true;
                     }
                 }
             }
