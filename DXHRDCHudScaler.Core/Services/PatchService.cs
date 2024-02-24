@@ -27,6 +27,9 @@ public class PatchService : IPatchService
             Pattern.Find(exeBytes, Pattern1Bytes, out _)
             && Pattern.Find(exeBytes, Pattern2Bytes, out _);
 
+        Pattern.FindAll(exeBytes, Pattern1Bytes, out var offsets1);
+        Pattern.FindAll(exeBytes, Pattern2Bytes, out var offsets2);
+
         if (!patternFound)
         {
             throw new Exception($"Pattern not found exception in {pathToExe}");

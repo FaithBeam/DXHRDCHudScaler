@@ -124,6 +124,10 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
                 r.Width == GameRenderResolution!.Width
             );
         }
+        else
+        {
+            SelectedResolution = Resolutions.FirstOrDefault();
+        }
 
         if (findDxhrdcExeService.TryFind(out var path))
         {
@@ -188,7 +192,8 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     }
 
     public string ResolutionComboToolTip =>
-        $"Scale width | % of game's default scale width (1280) | % of game render width ({GameRenderResolution!.Width})\n\nScaling tops out at 100% of the game's render width";
+        GameRenderResolution is null ? $"Scale width | % of game's default scale width (1280) | % of game render width (???)\n\nScaling tops out at 100% of the game's render width"
+            : $"Scale width | % of game's default scale width (1280) | % of game render width ({GameRenderResolution!.Width})\n\nScaling tops out at 100% of the game's render width";
 
     public ResolutionProxy? SelectedResolution
     {

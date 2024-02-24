@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using DXHRDCHudScaler.Core.Services;
 using DXHRDCHudScaler.Models;
 using DXHRDCHudScaler.Windows;
 using DynamicData;

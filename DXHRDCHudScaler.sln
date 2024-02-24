@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXHRDCHudScaler.Windows.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXHRDCHudScaler.Core.Tests", "DXHRDCHudScaler.Core.Tests\DXHRDCHudScaler.Core.Tests.csproj", "{A73C598B-9E4F-4A3B-8A8A-E5E7E8BB5079}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXHRDXHudScaler.Linux", "DXHRDXHudScaler.Linux\DXHRDXHudScaler.Linux.csproj", "{FBA096EF-697F-486B-A41E-E37FFA686B46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{A73C598B-9E4F-4A3B-8A8A-E5E7E8BB5079}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A73C598B-9E4F-4A3B-8A8A-E5E7E8BB5079}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A73C598B-9E4F-4A3B-8A8A-E5E7E8BB5079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBA096EF-697F-486B-A41E-E37FFA686B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBA096EF-697F-486B-A41E-E37FFA686B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBA096EF-697F-486B-A41E-E37FFA686B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBA096EF-697F-486B-A41E-E37FFA686B46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

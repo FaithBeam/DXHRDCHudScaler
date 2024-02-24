@@ -1,5 +1,6 @@
 using DXHRDCHudScaler.Core.Services;
 using DXHRDCHudScaler.Windows;
+using DXHRDXHudScaler.Linux;
 
 namespace DXHRDCHudScaler.Core.Tests;
 
@@ -12,6 +13,10 @@ public class Tests
         if (OperatingSystem.IsWindows())
         {
             service = new FindDxhrdcExeService();
+        }
+        else if(OperatingSystem.IsLinux())
+        {
+            service = new FindDXHRDCExeService();
         }
 
         if (service is null)

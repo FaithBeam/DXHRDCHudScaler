@@ -20,7 +20,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
             cur.GetService<IUninstallService>()!,
             cur.GetService<IFindDxhrdcExeService>()!
         );
-        var extrasTabViewModel = new ExtrasTabViewModel(this, new FovService());
+        var extrasTabViewModel = new ExtrasTabViewModel(this, cur.GetService<IFovService>()!);
         Router.Navigate.Execute(mainTabViewModel);
         GoToMain = ReactiveCommand.CreateFromObservable(
             () => Router.Navigate.Execute(mainTabViewModel)

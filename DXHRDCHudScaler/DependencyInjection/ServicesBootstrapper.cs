@@ -24,13 +24,19 @@ public static class ServicesBootstrapper
     {
         if (OperatingSystem.IsWindows())
         {
-            services.AddTransient<IResolutionService, ResolutionService>();
+            services.AddTransient<IResolutionService, DXHRDCHudScaler.Windows.ResolutionService>();
             services.AddTransient<IFovService, FovService>();
             services.AddTransient<IGetGameRenderResolutionService, GetGameRenderResolutionServiceService>();
             services.AddTransient<IFindDxhrdcExeService, FindDxhrdcExeService>();
         }
         else if (OperatingSystem.IsMacOS()) { }
-        else if (OperatingSystem.IsLinux()) { }
+        else if (OperatingSystem.IsLinux())
+        {
+            services.AddTransient<IResolutionService, DXHRDXHudScaler.Linux.ResolutionService>();
+            services.AddTransient<IFovService, DXHRDXHudScaler.Linux.FovService>();
+            services.AddTransient<IGetGameRenderResolutionService, DXHRDXHudScaler.Linux.GetGameRenderResolutionService>();
+            services.AddTransient<IFindDxhrdcExeService, DXHRDXHudScaler.Linux.FindDXHRDCExeService>();
+        }
         else
         {
             throw new InvalidOperationException("Unknown platform");

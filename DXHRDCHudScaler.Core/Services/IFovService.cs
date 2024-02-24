@@ -1,4 +1,4 @@
-﻿namespace DXHRDCHudScaler.Windows;
+﻿namespace DXHRDCHudScaler.Core.Services;
 
 public interface IFovService
 {

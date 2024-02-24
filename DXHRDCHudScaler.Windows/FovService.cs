@@ -1,5 +1,6 @@
 ﻿using System.Security.AccessControl;
 using System.Text;
+using DXHRDCHudScaler.Core.Services;
 using Microsoft.Win32;
 
 namespace DXHRDCHudScaler.Windows;

@@ -40,5 +40,6 @@
     <ItemGroup>
       <ProjectReference Include="..\DXHRDCHudScaler.Core\DXHRDCHudScaler.Core.csproj" />
       <ProjectReference Include="..\DXHRDCHudScaler.Windows\DXHRDCHudScaler.Windows.csproj" />
+      <ProjectReference Include="..\DXHRDXHudScaler.Linux\DXHRDXHudScaler.Linux.csproj" />
     </ItemGroup>
 </Project>
