@@ -6,7 +6,7 @@ using DynamicData;
 
 namespace DXHRDXHudScaler.Linux;
 
-public class ResolutionService : IResolutionService
+public partial class ResolutionService : IResolutionService
 {
     private static long _id;
     private readonly SourceCache<Resolution, long> _resolutionSourceCache = new(x => x.Id);
@@ -38,12 +38,11 @@ public class ResolutionService : IResolutionService
         return resolution;
     }
 
-    public Resolution? CurrentDesktopResolution  => _resolutionSourceCache.Items.FirstOrDefault();
-    
+    public Resolution? CurrentDesktopResolution => _resolutionSourceCache.Items.FirstOrDefault();
+
     private const string FileName = "/bin/bash";
     private const string Cmd = "-c xrandr";
-    private readonly Regex _resolutionRx = new Regex(@"\d{3,}x\d{3,}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
+    private readonly Regex _resolutionRx = ResolutionRx();
 
     private void GetResolutions()
     {
@@ -75,4 +74,7 @@ public class ResolutionService : IResolutionService
             TryAddResolution(uint.Parse(split[0]), uint.Parse(split[1]), out _);
         }
     }
+
+    [GeneratedRegex(@"\d{3,}x\d{3,}", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+    private static partial Regex ResolutionRx();
 }
