@@ -22,11 +22,14 @@ public static class ServicesBootstrapper
 
     private static void RegisterPlatformSpecificServices(IServiceCollection services)
     {
-        if (OperatingSystem.IsWindows())
+        if (OperatingSystem.IsWindows() && OperatingSystem.IsWindowsVersionAtLeast(5))
         {
             services.AddTransient<IResolutionService, DXHRDCHudScaler.Windows.ResolutionService>();
             services.AddTransient<IFovService, FovService>();
-            services.AddTransient<IGetGameRenderResolutionService, GetGameRenderResolutionServiceService>();
+            services.AddTransient<
+                IGetGameRenderResolutionService,
+                GetGameRenderResolutionServiceService
+            >();
             services.AddTransient<IFindDxhrdcExeService, FindDxhrdcExeService>();
         }
         else if (OperatingSystem.IsMacOS()) { }
@@ -34,8 +37,14 @@ public static class ServicesBootstrapper
         {
             services.AddTransient<IResolutionService, DXHRDXHudScaler.Linux.ResolutionService>();
             services.AddTransient<IFovService, DXHRDXHudScaler.Linux.FovService>();
-            services.AddTransient<IGetGameRenderResolutionService, DXHRDXHudScaler.Linux.GetGameRenderResolutionService>();
-            services.AddTransient<IFindDxhrdcExeService, DXHRDXHudScaler.Linux.FindDXHRDCExeService>();
+            services.AddTransient<
+                IGetGameRenderResolutionService,
+                DXHRDXHudScaler.Linux.GetGameRenderResolutionService
+            >();
+            services.AddTransient<
+                IFindDxhrdcExeService,
+                DXHRDXHudScaler.Linux.FindDXHRDCExeService
+            >();
         }
         else
         {

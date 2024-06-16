@@ -1,7 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
+﻿using Avalonia.ReactiveUI;
 using DXHRDCHudScaler.ViewModels;
 using ReactiveUI;
 
@@ -13,10 +10,7 @@ public partial class ExtrasTabView : ReactiveUserControl<IExtrasTabViewModel>
     {
         this.WhenActivated(d =>
         {
-            if (ViewModel == null)
-            {
-                return;
-            }
+            if (ViewModel == null) { }
         });
         InitializeComponent();
     }

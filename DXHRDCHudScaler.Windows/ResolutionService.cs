@@ -1,4 +1,5 @@
-﻿using DXHRDCHudScaler.Core.Models;
+﻿using System.Runtime.Versioning;
+using DXHRDCHudScaler.Core.Models;
 using DXHRDCHudScaler.Core.Services;
 using DynamicData;
 using Windows.Win32;
@@ -6,6 +7,7 @@ using Windows.Win32.Graphics.Gdi;
 
 namespace DXHRDCHudScaler.Windows;
 
+[SupportedOSPlatform("windows5.0")]
 public class ResolutionService : IResolutionService
 {
     private static long _id;
@@ -29,7 +31,9 @@ public class ResolutionService : IResolutionService
         var newRes = new Resolution(_id, width, height);
         resolution = newRes;
         if (_resolutionSourceCache.Items.Any(x => x.Equals(newRes)))
+        {
             return false;
+        }
         _resolutionSourceCache.AddOrUpdate(newRes);
         _id++;
         return true;
@@ -51,9 +55,6 @@ public class ResolutionService : IResolutionService
 
     private void GetCurrentDesktopResolution()
     {
-        if (!OperatingSystem.IsWindows() || !OperatingSystem.IsWindowsVersionAtLeast(5))
-            return;
-
         var devMode = new DEVMODEW();
         if (
             PInvoke.EnumDisplaySettings(
@@ -73,10 +74,6 @@ public class ResolutionService : IResolutionService
     {
         var devMode = new DEVMODEW();
         var i = (ENUM_DISPLAY_SETTINGS_MODE)0;
-        if (!OperatingSystem.IsWindows() || !OperatingSystem.IsWindowsVersionAtLeast(5))
-        {
-            throw new Exception("Unsupported windows version");
-        }
         while (PInvoke.EnumDisplaySettings(null, i, ref devMode))
         {
             TryAddResolution(devMode.dmPelsWidth, devMode.dmPelsHeight, out _);

@@ -17,6 +17,7 @@ public class ExtrasTabViewModel : ViewModelBase, IExtrasTabViewModel
 {
     private bool _applyBtnEnabled;
     private bool _fovSliderEnabled;
+    private readonly ObservableAsPropertyHelper<bool> _fovResetBtnEnabled;
     private readonly IFovService _fovService;
     private uint _fov;
     private SourceCache<Job, string> _jobCache = new(x => x.Name);
@@ -70,6 +71,10 @@ public class ExtrasTabViewModel : ViewModelBase, IExtrasTabViewModel
                     _jobCache.AddOrUpdate(new Job("SetFov", () => fovService.SetFov(x)));
                 }
             });
+        _fovResetBtnEnabled = this.WhenAnyValue(x => x.Fov)
+            .Throttle(TimeSpan.FromSeconds(0.25))
+            .Select(x => x != 75)
+            .ToProperty(this, x => x.FovResetBtnEnabled);
     }
 
     public bool ApplyBtnEnabled
@@ -83,6 +88,8 @@ public class ExtrasTabViewModel : ViewModelBase, IExtrasTabViewModel
         get => _fovSliderEnabled;
         set => this.RaiseAndSetIfChanged(ref _fovSliderEnabled, value);
     }
+
+    public bool FovResetBtnEnabled => _fovResetBtnEnabled.Value;
 
     public uint Fov
     {

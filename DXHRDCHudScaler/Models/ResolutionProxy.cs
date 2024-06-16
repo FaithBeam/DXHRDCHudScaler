@@ -10,7 +10,7 @@ public class ResolutionProxy(IResolution resolution, IResolution? gameResolution
     public override string ToString()
     {
         return gameResolution is null
-            ? $"{Width} | {(Width / (double)1280) * 100:0.00}% | ??? (Game resolution not found)"
-            : $"{Width} | {(Width / (double)1280) * 100:0.00}% | {(Width / (double)gameResolution.Width) * 100:0.00}%";
+            ? $"{Width} | {Width / (double)1280 * 100:0.00}% | ??? (Game resolution not found)"
+            : $"{Width} | {Width / (double)1280 * 100:0.00}% | {(Width / (double)gameResolution.Width) * 100:0.00}%";
     }
 }

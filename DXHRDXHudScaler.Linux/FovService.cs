@@ -10,7 +10,5 @@ public class FovService : IFovService
         return false;
     }
 
-    public void SetFov(uint fov)
-    {
-    }
+    public void SetFov(uint fov) { }
 }

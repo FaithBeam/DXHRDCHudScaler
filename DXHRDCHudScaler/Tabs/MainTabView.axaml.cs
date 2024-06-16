@@ -58,7 +58,7 @@ public partial class MainTabView : ReactiveUserControl<IMainTabViewModel>
                     FileTypeFilter = new FilePickerFileType[]
                     {
                         new("DXHRDC.exe") { Patterns = Options },
-                        new("dxhr.exe") { Patterns = new []{"dxhr.exe"} },
+                        new("dxhr.exe") { Patterns = new[] { "dxhr.exe" } },
                     }
                 }
             );

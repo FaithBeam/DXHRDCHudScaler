@@ -14,7 +14,7 @@ public class Tests
         {
             service = new FindDxhrdcExeService();
         }
-        else if(OperatingSystem.IsLinux())
+        else if (OperatingSystem.IsLinux())
         {
             service = new FindDXHRDCExeService();
         }

@@ -18,7 +18,7 @@
                     Ticks="{Binding Ticks}" IsSnapToTickEnabled="True" TickFrequency="1" VerticalAlignment="Center" MinWidth="100">
             </Slider>
             <Label Grid.Column="2" Content="{Binding Fov}" BorderThickness="0" VerticalAlignment="Center" />
-            <Button Grid.Column="3" Content="Reset" Command="{Binding ResetFovCmd}" >
+            <Button Grid.Column="3" Content="Reset" Command="{Binding ResetFovCmd}" IsEnabled="{Binding FovResetBtnEnabled}" >
                 <ToolTip.Tip>Sets the fov to 75 which is the game's default</ToolTip.Tip>
             </Button>
         </Grid>
