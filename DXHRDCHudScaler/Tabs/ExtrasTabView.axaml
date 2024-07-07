@@ -13,17 +13,12 @@
 
     <Grid RowDefinitions="*,Auto">
         <Grid ColumnDefinitions="Auto,Auto,Auto,Auto">
-            <Label Content="FOV" VerticalAlignment="Center" />
-            <Slider Grid.Column="1" x:Name="FovSlider" IsEnabled="{Binding FovSliderEnabled}" Value="{Binding Fov}" Minimum="1" Maximum="120"
-                    Ticks="{Binding Ticks}" IsSnapToTickEnabled="True" TickFrequency="1" VerticalAlignment="Center" MinWidth="100">
-            </Slider>
-            <Label Grid.Column="2" Content="{Binding Fov}" BorderThickness="0" VerticalAlignment="Center" />
-            <Button Grid.Column="3" Content="Reset" Command="{Binding ResetFovCmd}" IsEnabled="{Binding FovResetBtnEnabled}" >
-                <ToolTip.Tip>Sets the fov to 75 which is the game's default</ToolTip.Tip>
-            </Button>
+            <CheckBox Grid.Column="0" IsEnabled="{Binding SkipIntroVideosCheckboxEnabled}"
+                      IsChecked="{Binding SkipIntroVideosCheckboxChecked}" Content="Skip Intro Videos" />
         </Grid>
         <Grid Grid.Row="1">
-            <Button HorizontalAlignment="Right" Content="Apply" IsEnabled="{Binding ApplyBtnEnabled}" Command="{Binding ApplyCmd}" />
+            <Button HorizontalAlignment="Right" Content="Apply" IsEnabled="{Binding ApplyBtnEnabled}"
+                    Command="{Binding ApplyCmd}" />
         </Grid>
     </Grid>
 </UserControl>

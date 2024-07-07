@@ -4,13 +4,10 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Avalonia.Platform;
 using Avalonia.Platform.Storage;
-using DXHRDCHudScaler.Core;
 using DXHRDCHudScaler.Core.Models;
 using DXHRDCHudScaler.Core.Services;
 using DXHRDCHudScaler.Models;
-using DXHRDCHudScaler.Windows;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
@@ -31,9 +28,11 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     private readonly ObservableAsPropertyHelper<bool>? _canUninstall;
     private readonly ObservableAsPropertyHelper<bool>? _uninstallCmdIsExecuting;
     private bool _modalOpen;
+    private readonly IAppState _appState;
 
     public MainTabViewModel(
         IScreen screen,
+        IAppState appState,
         IResolutionService resolutionService,
         IGetGameRenderResolutionService gameRenderResolutionService,
         IPatchService patchService,
@@ -43,6 +42,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     )
     {
         HostScreen = screen;
+        _appState = appState;
         _resolutionService = resolutionService;
         _patchService = patchService;
         _backupDxhrdcService = backupDxhrdcService;
@@ -133,6 +133,8 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         {
             BrowseTextBox = path;
         }
+
+        this.WhenAnyValue(x => x.BrowseTextBox).Subscribe(x => _appState.GameExePath = x);
     }
 
     private void Uninstall()

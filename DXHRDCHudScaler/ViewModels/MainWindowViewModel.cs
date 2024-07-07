@@ -1,6 +1,5 @@
 ﻿using System.Reactive;
 using DXHRDCHudScaler.Core.Services;
-using DXHRDCHudScaler.Windows;
 using ReactiveUI;
 using Splat;
 
@@ -13,6 +12,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         var cur = Locator.Current;
         var mainTabViewModel = new MainTabViewModel(
             this,
+            cur.GetService<IAppState>()!,
             cur.GetService<IResolutionService>()!,
             cur.GetService<IGetGameRenderResolutionService>()!,
             cur.GetService<IPatchService>()!,
@@ -20,7 +20,11 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
             cur.GetService<IUninstallService>()!,
             cur.GetService<IFindDxhrdcExeService>()!
         );
-        var extrasTabViewModel = new ExtrasTabViewModel(this, cur.GetService<IFovService>()!);
+        var extrasTabViewModel = new ExtrasTabViewModel(
+            this,
+            cur.GetService<IAppState>()!,
+            cur.GetService<ISkipIntroVideosService>()!
+        );
         Router.Navigate.Execute(mainTabViewModel);
         GoToMain = ReactiveCommand.CreateFromObservable(
             () => Router.Navigate.Execute(mainTabViewModel)

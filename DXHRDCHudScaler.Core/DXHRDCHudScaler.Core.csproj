@@ -17,6 +17,7 @@
     <ItemGroup>
       <PackageReference Include="DynamicData" Version="7.9.5" />
       <PackageReference Include="PatternFinder" Version="1.0.2" />
+      <PackageReference Include="ReactiveUI" Version="18.3.1" />
     </ItemGroup>
 
 </Project>

@@ -15,7 +15,9 @@ public static class ServicesBootstrapper
 
     private static void RegisterCommonServices(IServiceCollection services)
     {
+        services.AddSingleton<IAppState, AppState>();
         services.AddTransient<IPatchService, PatchService>();
+        services.AddTransient<ISkipIntroVideosService, SkipIntroVideosService>();
         services.AddTransient<IUninstallService, UninstallService>();
         services.AddTransient<IBackupDxhrdcService, BackupDxhrdcService>();
     }
@@ -25,7 +27,6 @@ public static class ServicesBootstrapper
         if (OperatingSystem.IsWindows() && OperatingSystem.IsWindowsVersionAtLeast(5))
         {
             services.AddTransient<IResolutionService, DXHRDCHudScaler.Windows.ResolutionService>();
-            services.AddTransient<IFovService, FovService>();
             services.AddTransient<
                 IGetGameRenderResolutionService,
                 GetGameRenderResolutionServiceService
@@ -36,7 +37,6 @@ public static class ServicesBootstrapper
         else if (OperatingSystem.IsLinux())
         {
             services.AddTransient<IResolutionService, DXHRDXHudScaler.Linux.ResolutionService>();
-            services.AddTransient<IFovService, DXHRDXHudScaler.Linux.FovService>();
             services.AddTransient<
                 IGetGameRenderResolutionService,
                 DXHRDXHudScaler.Linux.GetGameRenderResolutionService

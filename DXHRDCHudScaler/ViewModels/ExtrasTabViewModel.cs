@@ -1,47 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using DXHRDCHudScaler.Core.Services;
 using DXHRDCHudScaler.Models;
-using DXHRDCHudScaler.Windows;
 using DynamicData;
-using DynamicData.Binding;
 using ReactiveUI;
 
 namespace DXHRDCHudScaler.ViewModels;
 
 public class ExtrasTabViewModel : ViewModelBase, IExtrasTabViewModel
 {
-    private bool _applyBtnEnabled;
-    private bool _fovSliderEnabled;
-    private readonly ObservableAsPropertyHelper<bool> _fovResetBtnEnabled;
-    private readonly IFovService _fovService;
-    private uint _fov;
+    private bool _applyBtnChecked;
+    private bool _skipIntroVideosCheckboxChecked;
+    private bool _skipIntroVideosCheckboxEnabled;
+
+    private readonly IAppState _appState;
+    private readonly ISkipIntroVideosService _skipIntroVideosService;
     private SourceCache<Job, string> _jobCache = new(x => x.Name);
 
-    public ExtrasTabViewModel(IScreen screen, IFovService fovService)
+    public ExtrasTabViewModel(
+        IScreen screen,
+        IAppState appState,
+        ISkipIntroVideosService skipIntroVideosService
+    )
     {
         HostScreen = screen;
-        _fovService = fovService;
+        _appState = appState;
+        _skipIntroVideosService = skipIntroVideosService;
+        _skipIntroVideosCheckboxEnabled = _appState.GameExePathExists();
 
-        uint initialFov;
-        if (_fovService.TryGetCurrentFov(out var foundFov))
-        {
-            initialFov = foundFov;
-            FovSliderEnabled = true;
-        }
-        else
-        {
-            initialFov = 75;
-        }
-        Fov = initialFov;
-        ResetFovCmd = ReactiveCommand.Create(() =>
-        {
-            Fov = 75;
-        });
+        this.WhenAnyValue(x => x._appState.GameExePath)
+            .Subscribe(x =>
+            {
+                _jobCache.Clear();
+                SkipIntroVideosCheckboxChecked = CheckboxCheckedLogicOnGameExeChanged();
+                SkipIntroVideosCheckboxEnabled = _appState.GameExePathExists();
+            });
+
+        this.WhenAnyValue(x => x.SkipIntroVideosCheckboxChecked)
+            .Skip(1)
+            .Subscribe(skipIntroVideosChecked =>
+            {
+                if (
+                    string.IsNullOrWhiteSpace(_appState.GameExePath)
+                    || !_appState.GameExePathExists()
+                )
+                {
+                    return;
+                }
+
+                if (skipIntroVideosChecked)
+                {
+                    _jobCache.AddOrUpdate(
+                        new Job(
+                            "SkipIntroVideosEnable",
+                            () => _skipIntroVideosService.Patch(_appState.GameExePath!)
+                        )
+                    );
+                }
+                else
+                {
+                    if (_jobCache.Items.Any(x => x.Name == "SkipIntroVideosEnable"))
+                    {
+                        _jobCache.Remove("SkipIntroVideosEnable");
+                    }
+                    else
+                    {
+                        _jobCache.AddOrUpdate(
+                            new Job(
+                                "SkipIntroVideosDisable",
+                                () => _skipIntroVideosService.UnPatch(_appState.GameExePath!)
+                            )
+                        );
+                    }
+                }
+            });
+
         _jobCache
             .Connect()
             .Subscribe(x =>
@@ -55,51 +90,42 @@ public class ExtrasTabViewModel : ViewModelBase, IExtrasTabViewModel
                 job.Action();
             }
 
-            initialFov = Fov;
             _jobCache.Clear();
         });
-        this.WhenAnyValue(x => x.Fov)
-            .Throttle(TimeSpan.FromSeconds(0.25))
-            .Subscribe(x =>
-            {
-                if (x == initialFov)
-                {
-                    _jobCache.Remove("SetFov");
-                }
-                else
-                {
-                    _jobCache.AddOrUpdate(new Job("SetFov", () => fovService.SetFov(x)));
-                }
-            });
-        _fovResetBtnEnabled = this.WhenAnyValue(x => x.Fov)
-            .Throttle(TimeSpan.FromSeconds(0.25))
-            .Select(x => x != 75)
-            .ToProperty(this, x => x.FovResetBtnEnabled);
+    }
+
+    private bool CheckboxCheckedLogicOnGameExeChanged()
+    {
+        if (!SkipIntroVideosCheckboxEnabled || string.IsNullOrWhiteSpace(_appState.GameExePath))
+        {
+            return SkipIntroVideosCheckboxChecked;
+        }
+        return _skipIntroVideosService.GetCurrentPatchStatus(_appState.GameExePath) switch
+        {
+            SkipIntroVideosPatchStatus.Patched => true,
+            SkipIntroVideosPatchStatus.UnPatched => false,
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 
     public bool ApplyBtnEnabled
     {
-        get => _applyBtnEnabled;
-        set => this.RaiseAndSetIfChanged(ref _applyBtnEnabled, value);
+        get => _applyBtnChecked;
+        set => this.RaiseAndSetIfChanged(ref _applyBtnChecked, value);
     }
 
-    public bool FovSliderEnabled
+    public bool SkipIntroVideosCheckboxEnabled
     {
-        get => _fovSliderEnabled;
-        set => this.RaiseAndSetIfChanged(ref _fovSliderEnabled, value);
+        get => _skipIntroVideosCheckboxEnabled;
+        set => this.RaiseAndSetIfChanged(ref _skipIntroVideosCheckboxEnabled, value);
     }
 
-    public bool FovResetBtnEnabled => _fovResetBtnEnabled.Value;
-
-    public uint Fov
+    public bool SkipIntroVideosCheckboxChecked
     {
-        get => _fov;
-        set => this.RaiseAndSetIfChanged(ref _fov, value);
+        get => _skipIntroVideosCheckboxChecked;
+        set => this.RaiseAndSetIfChanged(ref _skipIntroVideosCheckboxChecked, value);
     }
 
-    public IEnumerable<int> Ticks => Enumerable.Range(1, 120);
-
-    public ReactiveCommand<Unit, Unit> ResetFovCmd { get; }
     public ReactiveCommand<Unit, Unit> ApplyCmd { get; }
     public string? UrlPathSegment { get; } = Guid.NewGuid().ToString()[..5];
     public IScreen HostScreen { get; }
