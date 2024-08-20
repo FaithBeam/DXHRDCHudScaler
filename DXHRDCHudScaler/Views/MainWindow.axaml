@@ -35,7 +35,7 @@
                 </Style>
             </StackPanel.Styles>
             <Button Content="Main" Command="{Binding GoToMain}" FontSize="16" Background="Transparent" />
-            <Button Content="Extras" Command="{Binding GoToExtras}" FontSize="16" Background="Transparent" />
+            <!-- <Button Content="Extras" Command="{Binding GoToExtras}" FontSize="16" Background="Transparent" /> -->
         </StackPanel>
         <rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}" PageTransition="{x:Null}">
             <rxui:RoutedViewHost.ViewLocator>

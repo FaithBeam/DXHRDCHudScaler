@@ -5,20 +5,21 @@
              xmlns:vm="clr-namespace:DXHRDCHudScaler.ViewModels"
              xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
-             x:DataType="vm:ExtrasTabViewModel"
              x:Class="DXHRDCHudScaler.Tabs.ExtrasTabView">
-    <Design.DataContext>
-        <vm:ExtrasTabViewModel />
-    </Design.DataContext>
+    <!-- <Design.DataContext> -->
+    <!--     <vm:ExtrasTabViewModel /> -->
+    <!-- </Design.DataContext> -->
 
-    <Grid RowDefinitions="*,Auto">
-        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto">
-            <CheckBox Grid.Column="0" IsEnabled="{Binding SkipIntroVideosCheckboxEnabled}"
-                      IsChecked="{Binding SkipIntroVideosCheckboxChecked}" Content="Skip Intro Videos" />
-        </Grid>
-        <Grid Grid.Row="1">
-            <Button HorizontalAlignment="Right" Content="Apply" IsEnabled="{Binding ApplyBtnEnabled}"
-                    Command="{Binding ApplyCmd}" />
-        </Grid>
-    </Grid>
+    <!-- <Grid RowDefinitions="*,*,Auto"> -->
+    <!--     <CheckBox Grid.Row="0" IsEnabled="{Binding SkipIntroVideosCheckboxEnabled}" -->
+    <!--               IsChecked="{Binding SkipIntroVideosCheckboxChecked}" Content="Skip Intro Videos"> -->
+    <!--         <ToolTip.Tip>Enabling this will skip the videos on game startup, taking you directly to the game menu</ToolTip.Tip> -->
+    <!--     </CheckBox> -->
+    <!--     <CheckBox Grid.Row="1" IsEnabled="{Binding SkipCutscenesCheckboxEnabled}" -->
+    <!--               IsChecked="{Binding SkipCutscenesCheckboxChecked}" Content="Enable Skip Button for Cutscenes"> -->
+    <!--         <ToolTip.Tip>This enables you to skip any cutscene. This adds the skip button to cutscenes that had only the resume button.</ToolTip.Tip> -->
+    <!--     </CheckBox> -->
+    <!--     <Button Grid.Row="2" HorizontalAlignment="Right" Content="Apply" IsEnabled="{Binding ApplyBtnEnabled}" -->
+    <!--             Command="{Binding ApplyCmd}" /> -->
+    <!-- </Grid> -->
 </UserControl>

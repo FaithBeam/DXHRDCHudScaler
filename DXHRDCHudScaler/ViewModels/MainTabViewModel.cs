@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using DXHRDCHudScaler.Core.Models;
 using DXHRDCHudScaler.Core.Services;
+using DXHRDCHudScaler.Core.Services.BackupService;
+using DXHRDCHudScaler.Core.Services.UiScalePatchService;
+using DXHRDCHudScaler.Core.Services.UninstallService;
 using DXHRDCHudScaler.Models;
 using DynamicData;
 using DynamicData.Binding;
@@ -17,7 +20,7 @@ namespace DXHRDCHudScaler.ViewModels;
 public class MainTabViewModel : ViewModelBase, IMainTabViewModel
 {
     private readonly IResolutionService _resolutionService;
-    private readonly IPatchService _patchService;
+    private readonly IUiScalePatchService _uiScalePatchService;
     private readonly IBackupDxhrdcService _backupDxhrdcService;
     private readonly IUninstallService _uninstallService;
     private string? _browseTextBox;
@@ -35,7 +38,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         IAppState appState,
         IResolutionService resolutionService,
         IGetGameRenderResolutionService gameRenderResolutionService,
-        IPatchService patchService,
+        IUiScalePatchService uiScalePatchService,
         IBackupDxhrdcService backupDxhrdcService,
         IUninstallService uninstallService,
         IFindDxhrdcExeService findDxhrdcExeService
@@ -44,7 +47,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         HostScreen = screen;
         _appState = appState;
         _resolutionService = resolutionService;
-        _patchService = patchService;
+        _uiScalePatchService = uiScalePatchService;
         _backupDxhrdcService = backupDxhrdcService;
         _uninstallService = uninstallService;
 
@@ -55,7 +58,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         BrowseInteraction = new Interaction<Unit, IStorageFile?>();
 
         var canPatch = this.WhenAnyValue(x => x.CanPatch, selector: canPatchBool => canPatchBool);
-        PatchCmd = ReactiveCommand.CreateFromTask(PatchAsync, canPatch);
+        PatchCmd = ReactiveCommand.Create(Patch, canPatch);
         _patchCmdIsExecuting = PatchCmd.IsExecuting.ToProperty(
             this,
             x => x.PatchCmdIsExecuting,
@@ -66,14 +69,14 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
                 x => x.PatchCmdIsExecuting,
                 x => x.UninstallCmdIsExecuting
             )
-            .SelectMany(async x =>
+            .Select(x =>
             {
                 if (x.Item2 || x.Item3 || string.IsNullOrWhiteSpace(x.Item1))
                 {
                     return false;
                 }
                 var backupPath = x.Item1 + ".bak";
-                return await _patchService.CanPatchAsync(x.Item1, backupPath);
+                return _uiScalePatchService.CanPatch(x.Item1, backupPath);
             })
             .ToProperty(this, x => x.CanPatch, scheduler: RxApp.MainThreadScheduler);
 
@@ -150,7 +153,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         ModalOpen = true;
     }
 
-    private async Task PatchAsync()
+    private void Patch()
     {
         if (string.IsNullOrWhiteSpace(BrowseTextBox) || SelectedResolution is null)
         {
@@ -161,7 +164,7 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
 
         var backupPath = BrowseTextBox + ".bak";
         _backupDxhrdcService.Backup(BrowseTextBox, backupPath);
-        await _patchService.PatchAsync(BrowseTextBox, SelectedResolution.Width);
+        _uiScalePatchService.Patch(BrowseTextBox, SelectedResolution.Width);
         ModalText = "Patched! You may close this application.";
         ModalOpen = true;
     }

@@ -1,5 +1,10 @@
 ﻿using System;
+using DXHRDCHudScaler.Core.Models;
 using DXHRDCHudScaler.Core.Services;
+using DXHRDCHudScaler.Core.Services.BackupService;
+// using DXHRDCHudScaler.Core.Services.SimplePatchService;
+using DXHRDCHudScaler.Core.Services.UiScalePatchService;
+using DXHRDCHudScaler.Core.Services.UninstallService;
 using DXHRDCHudScaler.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,8 +21,8 @@ public static class ServicesBootstrapper
     private static void RegisterCommonServices(IServiceCollection services)
     {
         services.AddSingleton<IAppState, AppState>();
-        services.AddTransient<IPatchService, PatchService>();
-        services.AddTransient<ISkipIntroVideosService, SkipIntroVideosService>();
+        services.AddTransient<IUiScalePatchService, UiScalePatchService>();
+        // services.AddTransient<ISimplePatchService, SimplePatchService>();
         services.AddTransient<IUninstallService, UninstallService>();
         services.AddTransient<IBackupDxhrdcService, BackupDxhrdcService>();
     }

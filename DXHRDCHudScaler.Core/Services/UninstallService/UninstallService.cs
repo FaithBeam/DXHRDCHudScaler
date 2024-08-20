@@ -1,4 +1,4 @@
-﻿namespace DXHRDCHudScaler.Core.Services;
+﻿namespace DXHRDCHudScaler.Core.Services.UninstallService;
 
 public class UninstallService : IUninstallService
 {

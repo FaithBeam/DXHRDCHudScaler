@@ -11,7 +11,7 @@ public class AppViewLocator : IViewLocator
         viewModel switch
         {
             MainTabViewModel context => new MainTabView { DataContext = context },
-            ExtrasTabViewModel context => new ExtrasTabView { DataContext = context },
+            // ExtrasTabViewModel context => new ExtrasTabView { DataContext = context },
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
         };
 }

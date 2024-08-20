@@ -1,4 +1,4 @@
-﻿namespace DXHRDCHudScaler.Core.Services;
+﻿namespace DXHRDCHudScaler.Core.Services.BackupService;
 
 public class BackupDxhrdcService : IBackupDxhrdcService
 {

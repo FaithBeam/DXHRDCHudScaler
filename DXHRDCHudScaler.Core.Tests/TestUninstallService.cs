@@ -1,4 +1,5 @@
 ﻿using DXHRDCHudScaler.Core.Services;
+using DXHRDCHudScaler.Core.Services.UninstallService;
 using DXHRDCHudScaler.Windows;
 
 namespace DXHRDCHudScaler.Core.Tests;

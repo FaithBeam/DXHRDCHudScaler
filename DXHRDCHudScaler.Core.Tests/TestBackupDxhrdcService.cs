@@ -1,4 +1,5 @@
 ﻿using DXHRDCHudScaler.Core.Services;
+using DXHRDCHudScaler.Core.Services.BackupService;
 using DXHRDCHudScaler.Windows;
 
 namespace DXHRDCHudScaler.Core.Tests;

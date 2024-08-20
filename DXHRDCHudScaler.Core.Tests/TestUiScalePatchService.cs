@@ -1,13 +1,14 @@
 using DXHRDCHudScaler.Core.Services;
+using DXHRDCHudScaler.Core.Services.UiScalePatchService;
 using DXHRDCHudScaler.Windows;
 using DXHRDXHudScaler.Linux;
 
 namespace DXHRDCHudScaler.Core.Tests;
 
-public class Tests
+public class TestUiScalePatchService
 {
     [Test]
-    public async Task TestCanPatchAsync()
+    public void TestCanPatch()
     {
         IFindDxhrdcExeService? service = null;
         if (OperatingSystem.IsWindows())
@@ -26,13 +27,13 @@ public class Tests
 
         if (service.TryFind(out var path))
         {
-            var sut = new PatchService();
-            Assert.That(await sut.CanPatchAsync(path, path + ".bak"));
+            var sut = new UiScalePatchService();
+            Assert.That(sut.CanPatch(path, path + ".bak"));
         }
     }
 
     [Test]
-    public async Task TestPatchAsync()
+    public void TestPatch()
     {
         IFindDxhrdcExeService? service = null;
         if (OperatingSystem.IsWindows())
@@ -47,8 +48,8 @@ public class Tests
 
         if (service.TryFind(out var path))
         {
-            var sut = new PatchService();
-            await sut.PatchAsync(path, 3840);
+            var sut = new UiScalePatchService();
+            sut.Patch(path, 3840);
         }
     }
 }

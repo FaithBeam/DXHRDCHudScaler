@@ -1,34 +1,32 @@
 ﻿using PatternFinder;
 
-namespace DXHRDCHudScaler.Core.Services;
+namespace DXHRDCHudScaler.Core.Services.UiScalePatchService;
 
-public class PatchService : IPatchService
+public class UiScalePatchService : IUiScalePatchService
 {
-    private const string Pattern1 = "81 FF ?? ?? ?? ?? 7C 05 BF ?? ?? ?? ?? DB 44 24";
-    private const string Pattern2 =
-        "81 FE ?? ?? ?? ?? 7D 08 8B CE 89 74 24 20 EB 09 B9 ?? ?? ?? ?? 89 4C 24 20";
-    private static readonly PatternFinder.Pattern.Byte[] Pattern1Bytes = Pattern.Transform(
-        Pattern1
-    );
-    private static readonly PatternFinder.Pattern.Byte[] Pattern2Bytes = Pattern.Transform(
-        Pattern2
+    private static readonly PatternFinder.Pattern.Byte[] UiScalePattern1Bytes = Pattern.Transform(
+        "81 FF ?? ?? ?? ?? 7C 05 BF ?? ?? ?? ?? DB 44 24"
     );
 
-    public async Task<bool> CanPatchAsync(string pathToExe, string pathToBackup)
+    private static readonly PatternFinder.Pattern.Byte[] UiScalePattern2Bytes = Pattern.Transform(
+        "81 FE ?? ?? ?? ?? 7D 08 8B CE 89 74 24 20 EB 09 B9 ?? ?? ?? ?? 89 4C 24 20"
+    );
+
+    public bool CanPatch(string pathToExe, string pathToBackup)
     {
         if (!File.Exists(pathToExe) || File.Exists(pathToBackup))
         {
             return false;
         }
 
-        var exeBytes = await File.ReadAllBytesAsync(pathToExe);
+        var exeBytes = File.ReadAllBytes(pathToExe);
 
         var patternFound =
-            Pattern.Find(exeBytes, Pattern1Bytes, out _)
-            && Pattern.Find(exeBytes, Pattern2Bytes, out _);
+            Pattern.Find(exeBytes, UiScalePattern1Bytes, out _)
+            && Pattern.Find(exeBytes, UiScalePattern2Bytes, out _);
 
-        Pattern.FindAll(exeBytes, Pattern1Bytes, out var offsets1);
-        Pattern.FindAll(exeBytes, Pattern2Bytes, out var offsets2);
+        Pattern.FindAll(exeBytes, UiScalePattern1Bytes, out _);
+        Pattern.FindAll(exeBytes, UiScalePattern2Bytes, out _);
 
         if (!patternFound)
         {
@@ -38,18 +36,18 @@ public class PatchService : IPatchService
         return patternFound;
     }
 
-    public async Task PatchAsync(string pathToExe, uint width)
+    public void Patch(string pathToExe, uint width)
     {
         if (!File.Exists(pathToExe))
         {
             throw new FileNotFoundException(pathToExe);
         }
 
-        var exeBytes = await File.ReadAllBytesAsync(pathToExe);
+        var exeBytes = File.ReadAllBytes(pathToExe);
 
         if (
-            Pattern.Find(exeBytes, Pattern1Bytes, out var offset1)
-            && Pattern.Find(exeBytes, Pattern2Bytes, out var offset2)
+            Pattern.Find(exeBytes, UiScalePattern1Bytes, out var offset1)
+            && Pattern.Find(exeBytes, UiScalePattern2Bytes, out var offset2)
         )
         {
             var widthBytes = BitConverter.GetBytes(width);
@@ -72,7 +70,7 @@ public class PatchService : IPatchService
             exeBytes[offset2 + 19] = 0;
             exeBytes[offset2 + 20] = 0;
 
-            await File.WriteAllBytesAsync(pathToExe, exeBytes);
+            File.WriteAllBytes(pathToExe, exeBytes);
         }
         else
         {
