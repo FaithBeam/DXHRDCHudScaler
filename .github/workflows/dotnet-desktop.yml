@@ -26,8 +26,8 @@ jobs:
 
     - name: dotnet publish
       run: |
-        dotnet publish .\DXHRDCHudScaler\DXHRDCHudScaler.csproj -c Release -o $PWD\bin -p:PublishSingleFile=true  -r win-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
-        dotnet publish .\DXHRDCHudScaler\DXHRDCHudScaler.csproj -c Release -o $PWD\bin -p:PublishSingleFile=true  -r linux-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
+        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true  -r win-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
+        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true  -r linux-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
