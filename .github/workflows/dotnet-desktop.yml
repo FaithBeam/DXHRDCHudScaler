@@ -42,11 +42,11 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        name: DXHRDC - Hud Scaler.${{ steps.gitversion.outputs.semVer }}+win.x64
+        name: DXHRDC-HudScaler.${{ steps.gitversion.outputs.semVer }}+win.x64
         path: bin/DXHRDC - Hud Scaler.exe
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        name: DXHRDC - Hud Scaler.${{ steps.gitversion.outputs.semVer }}+linux.x64
+        name: DXHRDC-HudScaler.${{ steps.gitversion.outputs.semVer }}+linux.x64
         path: bin/DXHRDC - Hud Scaler
