@@ -18,7 +18,17 @@ jobs:
       with:
         fetch-depth: 0
 
-    # Install the .NET Core workload
+    - name: Install GitVersion
+      if: contains(github.ref, 'master')
+      uses: gittools/actions/gitversion/setup@v0
+      with:
+        versionSpec: "5.x"
+
+    - name: Determine Version
+      if: contains(github.ref, 'master')
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0
+
     - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
@@ -26,17 +36,17 @@ jobs:
 
     - name: dotnet publish
       run: |
-        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true  -r win-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
-        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true  -r linux-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
+        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true -r win-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.gitversion.outputs.SemVer }} -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }}
+        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true -r linux-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.gitversion.outputs.SemVer }} -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }}
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        name: DXHRDC - Hud Scaler.win+x64
+        name: DXHRDC - Hud Scaler.${{ steps.gitversion.outputs.semVer }}+win.x64
         path: bin/DXHRDC - Hud Scaler.exe
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        name: DXHRDC - Hud Scaler.linux+x64
+        name: DXHRDC - Hud Scaler.${{ steps.gitversion.outputs.semVer }}+linux.x64
         path: bin/DXHRDC - Hud Scaler
