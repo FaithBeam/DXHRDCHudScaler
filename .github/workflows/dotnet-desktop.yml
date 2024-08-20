@@ -1,0 +1,42 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: dotnet publish
+      run: |
+        dotnet publish .\DXHRDCHudScaler\DXHRDCHudScaler.csproj -c Release -o $PWD\bin -p:PublishSingleFile=true  -r win-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
+        dotnet publish .\DXHRDCHudScaler\DXHRDCHudScaler.csproj -c Release -o $PWD\bin -p:PublishSingleFile=true  -r linux-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.6
+      with:
+        name: DXHRDC - Hud Scaler.win+x64
+        path: bin/DXHRDC - Hud Scaler.exe
+    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.6
+      with:
+        name: DXHRDC - Hud Scaler.linux+x64
+        path: bin/DXHRDC - Hud Scaler
