@@ -7,11 +7,17 @@ on:
     branches: [ "master" ]
 
 jobs:
-
   build:
-
-    runs-on: ubuntu-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    strategy:
+      matrix: 
+        os: 
+          - name: ubuntu-latest
+            rid: linux-x64
+            pkgRid: linux.x64
+          - name: windows-latest
+            rid: win-x64
+            pkgRid: win.x64
+    runs-on: ${{ matrix.os.name }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -32,21 +38,14 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
 
     - name: dotnet publish
       run: |
-        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true -r win-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.gitversion.outputs.SemVer }} -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }}
-        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -p:PublishSingleFile=true -r linux-x64 --self-contained -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.gitversion.outputs.SemVer }} -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }}
+        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -r ${{ matrix.os.rid }} -p:Version=${{ steps.gitversion.outputs.SemVer }} -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }}
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        name: DXHRDC-HudScaler.${{ steps.gitversion.outputs.semVer }}+win.x64
-        path: bin/DXHRDC - Hud Scaler.exe
-    
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.3.6
-      with:
-        name: DXHRDC-HudScaler.${{ steps.gitversion.outputs.semVer }}+linux.x64
-        path: bin/DXHRDC - Hud Scaler
+        name: DXHRDC-HudScaler.${{ steps.gitversion.outputs.semVer }}+${{ matrix.os.pkgRid }}
+        path: bin
