@@ -12,7 +12,7 @@ using ReactiveUI;
 
 namespace DXHRDCHudScaler.Views;
 
-public partial class MainWindow : ReactiveWindow<IMainWindowViewModel>
+public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
     public MainWindow()
     {

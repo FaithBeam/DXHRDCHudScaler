@@ -6,8 +6,8 @@
         </Border>
     </Design.PreviewWith>
 
-    <Style Selector="TabControl.p-0">
-        <Setter Property="Padding" Value="0" />
+    <Style Selector="TabControl.p-2">
+        <Setter Property="Padding" Value="2" />
     </Style>
     
     <Style Selector="TabItem.tabitem">

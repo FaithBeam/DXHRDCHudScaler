@@ -21,35 +21,32 @@ public static class ServicesBootstrapper
     private static void RegisterCommonServices(IServiceCollection services)
     {
         services.AddSingleton<IAppState, AppState>();
-        services.AddTransient<IUiScalePatchService, UiScalePatchService>();
-        // services.AddTransient<ISimplePatchService, SimplePatchService>();
-        services.AddTransient<IUninstallService, UninstallService>();
-        services.AddTransient<IBackupDxhrdcService, BackupDxhrdcService>();
+        services.AddScoped<IUiScalePatchService, UiScalePatchService>();
+        // services.AddScoped<ISimplePatchService, SimplePatchService>();
+        services.AddScoped<IUninstallService, UninstallService>();
+        services.AddScoped<IBackupDxhrdcService, BackupDxhrdcService>();
     }
 
     private static void RegisterPlatformSpecificServices(IServiceCollection services)
     {
         if (OperatingSystem.IsWindows() && OperatingSystem.IsWindowsVersionAtLeast(5))
         {
-            services.AddTransient<IResolutionService, DXHRDCHudScaler.Windows.ResolutionService>();
-            services.AddTransient<
+            services.AddScoped<IResolutionService, DXHRDCHudScaler.Windows.ResolutionService>();
+            services.AddScoped<
                 IGetGameRenderResolutionService,
                 GetGameRenderResolutionServiceService
             >();
-            services.AddTransient<IFindDxhrdcExeService, FindDxhrdcExeService>();
+            services.AddScoped<IFindDxhrdcExeService, FindDxhrdcExeService>();
         }
         else if (OperatingSystem.IsMacOS()) { }
         else if (OperatingSystem.IsLinux())
         {
-            services.AddTransient<IResolutionService, DXHRDXHudScaler.Linux.ResolutionService>();
-            services.AddTransient<
+            services.AddScoped<IResolutionService, DXHRDXHudScaler.Linux.ResolutionService>();
+            services.AddScoped<
                 IGetGameRenderResolutionService,
                 DXHRDXHudScaler.Linux.GetGameRenderResolutionService
             >();
-            services.AddTransient<
-                IFindDxhrdcExeService,
-                DXHRDXHudScaler.Linux.FindDXHRDCExeService
-            >();
+            services.AddScoped<IFindDxhrdcExeService, DXHRDXHudScaler.Linux.FindDXHRDCExeService>();
         }
         else
         {

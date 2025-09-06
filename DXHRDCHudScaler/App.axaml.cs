@@ -30,7 +30,7 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = Locator.Current.GetService<IMainWindowViewModel>(),
+                DataContext = Container!.GetRequiredService<MainWindowViewModel>(),
             };
         }
 

@@ -7,8 +7,8 @@ public static class ViewModelBootstrapper
 {
     public static void RegisterViewModels(IServiceCollection services)
     {
-        services.AddSingleton<IMainTabViewModel, MainTabViewModel>();
+        services.AddSingleton<MainTabViewModel>();
         // services.AddSingleton<IExtrasTabViewModel, ExtrasTabViewModel>();
-        services.AddSingleton<IMainWindowViewModel, MainWindowViewModel>();
+        services.AddSingleton<MainWindowViewModel>();
     }
 }

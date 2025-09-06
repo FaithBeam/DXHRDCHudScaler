@@ -17,7 +17,7 @@ using ReactiveUI;
 
 namespace DXHRDCHudScaler.ViewModels;
 
-public class MainTabViewModel : ViewModelBase, IMainTabViewModel
+public class MainTabViewModel : ViewModelBase
 {
     private readonly IResolutionService _resolutionService;
     private readonly IUiScalePatchService _uiScalePatchService;
@@ -34,7 +34,6 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     private readonly IAppState _appState;
 
     public MainTabViewModel(
-        IScreen screen,
         IAppState appState,
         IResolutionService resolutionService,
         IGetGameRenderResolutionService gameRenderResolutionService,
@@ -44,7 +43,6 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         IFindDxhrdcExeService findDxhrdcExeService
     )
     {
-        HostScreen = screen;
         _appState = appState;
         _resolutionService = resolutionService;
         _uiScalePatchService = uiScalePatchService;
@@ -112,14 +110,14 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
         }
         var resolutionsSource = resolutionService
             .Connect()
-            .Sort(
-                SortExpressionComparer<Resolution>
+            .Transform(r => new ResolutionProxy(r, GameRenderResolution!))
+            .SortAndBind(
+                out _resolutions,
+                SortExpressionComparer<ResolutionProxy>
                     .Ascending(x => x.Width)
                     .ThenByAscending(x => x.Height)
             )
-            .Transform(r => new ResolutionProxy(r, GameRenderResolution!))
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Bind(out _resolutions)
             .Subscribe();
         if (GameRenderResolution is not null)
         {
@@ -228,6 +226,4 @@ public class MainTabViewModel : ViewModelBase, IMainTabViewModel
     public ReactiveCommand<Unit, Unit> UninstallCmd { get; }
     public Interaction<Unit, Resolution?> AddResolutionInteraction { get; }
     public Interaction<Unit, IStorageFile?> BrowseInteraction { get; }
-    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString()[..5];
-    public IScreen HostScreen { get; set; }
 }
