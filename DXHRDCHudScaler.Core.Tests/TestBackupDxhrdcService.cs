@@ -1,6 +1,6 @@
 ﻿using DXHRDCHudScaler.Core.Services;
 using DXHRDCHudScaler.Core.Services.BackupService;
-using DXHRDCHudScaler.Windows;
+using DXHRDCHudScaler.Core.Services.FindDXHRDCExeService;
 
 namespace DXHRDCHudScaler.Core.Tests;
 
@@ -9,7 +9,7 @@ public class TestBackupDxhrdcService
     [Test]
     public void TestCanBackup()
     {
-        var findService = new FindDxhrdcExeService();
+        var findService = new FindDxhrdcExeServiceWin();
         if (findService.TryFind(out var pathToExe))
         {
             var sut = new BackupDxhrdcService();
@@ -20,7 +20,7 @@ public class TestBackupDxhrdcService
     [Test]
     public void TestBackup()
     {
-        var findService = new FindDxhrdcExeService();
+        var findService = new FindDxhrdcExeServiceWin();
         if (findService.TryFind(out var pathToExe))
         {
             var sut = new BackupDxhrdcService();

@@ -1,11 +1,10 @@
 ﻿using System.Runtime.Versioning;
-using DXHRDCHudScaler.Core.Services;
 using Microsoft.Win32;
 
-namespace DXHRDCHudScaler.Windows;
+namespace DXHRDCHudScaler.Core.Services.FindDXHRDCExeService;
 
 [SupportedOSPlatform("windows")]
-public class FindDxhrdcExeService : IFindDxhrdcExeService
+public class FindDxhrdcExeServiceWin : IFindDxhrdcExeService
 {
     public bool TryFind(out string path)
     {

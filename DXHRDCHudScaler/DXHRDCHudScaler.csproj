@@ -1,45 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
-        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
-        <ApplicationIcon>Assets\dxhrdc-icon.ico</ApplicationIcon>
-        <AssemblyName>DXHRDC - Hud Scaler</AssemblyName>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <AvaloniaResource Include="Assets\**"/>
-    </ItemGroup>
-
-
-    <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.9" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.9" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.9" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.9" />
-        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.9" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.9" />
-        <PackageReference Include="DialogHost.Avalonia" Version="0.7.7" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-        <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.8.12" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <ProjectReference Include="..\DXHRDCHudScaler.Core\DXHRDCHudScaler.Core.csproj" />
-      <ProjectReference Include="..\DXHRDCHudScaler.Windows\DXHRDCHudScaler.Windows.csproj" />
-      <ProjectReference Include="..\DXHRDXHudScaler.Linux\DXHRDXHudScaler.Linux.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <PublishAot>true</PublishAot>
+    <IsAotCompatible>true</IsAotCompatible>
+    <TrimMode>link</TrimMode>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <ApplicationIcon>Assets\dxhrdc-icon.ico</ApplicationIcon>
+    <AssemblyName>DXHRDC-HudScaler</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <NoWarn>1701;1702;IL2121;IL2026;IL2109;IL2121;IL3050</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <NoWarn>1701;1702;IL2121;IL2026;IL2109;IL2121;IL3050</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <TrimmerRootAssembly Include="Avalonia.Themes.Fluent" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.5" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.5" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.5" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference
+      Condition="'$(Configuration)' == 'Debug'"
+      Include="Avalonia.Diagnostics"
+      Version="11.3.5"
+    />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.5" />
+    <PackageReference Include="DialogHost.Avalonia" Version="0.9.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="16.2.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DXHRDCHudScaler.Core\DXHRDCHudScaler.Core.csproj" />
+  </ItemGroup>
 </Project>

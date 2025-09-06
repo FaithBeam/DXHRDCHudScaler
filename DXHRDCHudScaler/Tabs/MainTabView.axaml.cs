@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.ReactiveUI;
 using DXHRDCHudScaler.Core.Models;
@@ -14,7 +12,7 @@ using ReactiveUI;
 
 namespace DXHRDCHudScaler.Tabs;
 
-public partial class MainTabView : ReactiveUserControl<IMainTabViewModel>
+public partial class MainTabView : ReactiveUserControl<MainTabViewModel>
 {
     private TopLevel? _topLevel;
     private Window? _window;
@@ -25,7 +23,9 @@ public partial class MainTabView : ReactiveUserControl<IMainTabViewModel>
         this.WhenActivated(d =>
         {
             if (ViewModel == null)
+            {
                 return;
+            }
             _topLevel = TopLevel.GetTopLevel(this);
             _window = (Window)_topLevel! ?? throw new Exception("Unable to get window for MainTab");
             d(ViewModel.BrowseInteraction.RegisterHandler(ShowOpenFileDialogAsync));
@@ -37,7 +37,9 @@ public partial class MainTabView : ReactiveUserControl<IMainTabViewModel>
         });
     }
 
-    private async Task ShowAddCustomResolutionDialogAsync(InteractionContext<Unit, Resolution?> arg)
+    private async Task ShowAddCustomResolutionDialogAsync(
+        IInteractionContext<Unit, Resolution?> arg
+    )
     {
         var dialog = new AddResolutionDialog { DataContext = new AddResolutionDialogViewModel() };
         var result = await dialog.ShowDialog<Resolution?>(_window!);
@@ -46,7 +48,7 @@ public partial class MainTabView : ReactiveUserControl<IMainTabViewModel>
 
     private static readonly string[] Options = ["DXHRDC.exe"];
 
-    private async Task ShowOpenFileDialogAsync(InteractionContext<Unit, IStorageFile?> arg)
+    private async Task ShowOpenFileDialogAsync(IInteractionContext<Unit, IStorageFile?> arg)
     {
         if (_topLevel is not null)
         {
@@ -55,11 +57,11 @@ public partial class MainTabView : ReactiveUserControl<IMainTabViewModel>
                 {
                     Title = "Select DXHRDC.exe",
                     AllowMultiple = false,
-                    FileTypeFilter = new FilePickerFileType[]
-                    {
-                        new("DXHRDC.exe") { Patterns = Options },
-                        new("dxhr.exe") { Patterns = new[] { "dxhr.exe" } },
-                    }
+                    FileTypeFilter =
+                    [
+                        new FilePickerFileType("DXHRDC.exe") { Patterns = Options },
+                        new FilePickerFileType("dxhr.exe") { Patterns = ["dxhr.exe"] },
+                    ],
                 }
             );
             arg.SetOutput(fileNames.Any() ? fileNames[0] : null);

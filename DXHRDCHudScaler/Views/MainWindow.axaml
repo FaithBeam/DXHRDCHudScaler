@@ -1,15 +1,12 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:rxui="http://reactiveui.net"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:DXHRDCHudScaler.ViewModels"
         xmlns:tabs="clr-namespace:DXHRDCHudScaler.Tabs"
-        xmlns:dxhrdcHudScaler="clr-namespace:DXHRDCHudScaler"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DXHRDCHudScaler.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/dxhrdc-icon.ico"
         Width="500"
         CanResize="False"
         SizeToContent="Height"
@@ -18,29 +15,14 @@
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
-
+    
     <Window.Styles>
         <StyleInclude Source="../Styles/TabStyles.axaml" />
     </Window.Styles>
-    
-    <Grid RowDefinitions="Auto,*" Margin="5,2,5,5">
-        <StackPanel Orientation="Horizontal">
-            <StackPanel.Styles>
-                <Style Selector="StackPanel > Button">
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="0,0,5,2" />
-                </Style>
-                <Style Selector="StackPanel > TextBlock">
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-            </StackPanel.Styles>
-            <Button Content="Main" Command="{Binding GoToMain}" FontSize="16" Background="Transparent" />
-            <!-- <Button Content="Extras" Command="{Binding GoToExtras}" FontSize="16" Background="Transparent" /> -->
-        </StackPanel>
-        <rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}" PageTransition="{x:Null}">
-            <rxui:RoutedViewHost.ViewLocator>
-                <dxhrdcHudScaler:AppViewLocator />
-            </rxui:RoutedViewHost.ViewLocator>
-        </rxui:RoutedViewHost>
-    </Grid>
+
+        <TabControl Classes="p-2">
+            <TabItem x:Name="MainTabItem" Header="Main" Classes="tabitem">
+                <tabs:MainTabView DataContext="{Binding MainTabViewModel}" />
+            </TabItem>
+        </TabControl>
 </Window>

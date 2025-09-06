@@ -1,4 +1,4 @@
-namespace DXHRDCHudScaler.Core.Services;
+namespace DXHRDCHudScaler.Core.Services.FindDXHRDCExeService;
 
 public interface IFindDxhrdcExeService
 {

@@ -1,17 +1,16 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using DXHRDCHudScaler.Core.Models;
-using DXHRDCHudScaler.Core.Services;
 using DynamicData;
 
-namespace DXHRDXHudScaler.Linux;
+namespace DXHRDCHudScaler.Core.Services.ResolutionService;
 
-public partial class ResolutionService : IResolutionService
+public partial class ResolutionServiceLinux : IResolutionService
 {
     private static long _id;
     private readonly SourceCache<Resolution, long> _resolutionSourceCache = new(x => x.Id);
 
-    public ResolutionService()
+    public ResolutionServiceLinux()
     {
         GetResolutions();
     }
@@ -52,7 +51,7 @@ public partial class ResolutionService : IResolutionService
             Arguments = Cmd,
             RedirectStandardOutput = true,
             UseShellExecute = false,
-            CreateNoWindow = true
+            CreateNoWindow = true,
         };
         using var process = Process.Start(psi);
         var output = "";

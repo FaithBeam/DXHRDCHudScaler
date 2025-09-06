@@ -6,6 +6,7 @@ public class ResolutionProxy(IResolution resolution, IResolution? gameResolution
 {
     public long Id { get; } = resolution.Id;
     public uint Width { get; } = resolution.Width;
+    public uint Height { get; } = resolution.Height;
 
     public override string ToString()
     {

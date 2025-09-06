@@ -1,7 +1,7 @@
 ﻿using DXHRDCHudScaler.Core.Models;
 using DynamicData;
 
-namespace DXHRDCHudScaler.Core.Services;
+namespace DXHRDCHudScaler.Core.Services.ResolutionService;
 
 public interface IResolutionService
 {

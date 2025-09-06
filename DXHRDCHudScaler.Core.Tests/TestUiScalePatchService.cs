@@ -1,7 +1,5 @@
-using DXHRDCHudScaler.Core.Services;
+using DXHRDCHudScaler.Core.Services.FindDXHRDCExeService;
 using DXHRDCHudScaler.Core.Services.UiScalePatchService;
-using DXHRDCHudScaler.Windows;
-using DXHRDXHudScaler.Linux;
 
 namespace DXHRDCHudScaler.Core.Tests;
 
@@ -13,11 +11,11 @@ public class TestUiScalePatchService
         IFindDxhrdcExeService? service = null;
         if (OperatingSystem.IsWindows())
         {
-            service = new FindDxhrdcExeService();
+            service = new FindDxhrdcExeServiceWin();
         }
         else if (OperatingSystem.IsLinux())
         {
-            service = new FindDXHRDCExeService();
+            service = new FindDXHRDCExeServiceLinux();
         }
 
         if (service is null)
@@ -38,7 +36,7 @@ public class TestUiScalePatchService
         IFindDxhrdcExeService? service = null;
         if (OperatingSystem.IsWindows())
         {
-            service = new FindDxhrdcExeService();
+            service = new FindDxhrdcExeServiceWin();
         }
 
         if (service is null)
