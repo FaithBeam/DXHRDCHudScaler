@@ -1,34 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-
-        <IsPackable>false</IsPackable>
-        <IsTestProject>true</IsTestProject>
-        <AssemblyName>DXHRDCHudScaler.Core.Tests</AssemblyName>
-        <RootNamespace>DXHRDCHudScaler.Core.Tests</RootNamespace>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-        <PackageReference Include="NUnit" Version="4.4.0" />
-        <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
-        <PackageReference Include="NUnit.Analyzers" Version="4.10.0">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="coverlet.collector" Version="6.0.4">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\DXHRDCHudScaler.Core\DXHRDCHudScaler.Core.csproj" />
-      <ProjectReference Include="..\DXHRDCHudScaler.Windows\DXHRDCHudScaler.Windows.csproj" />
-      <ProjectReference Include="..\DXHRDXHudScaler.Linux\DXHRDXHudScaler.Linux.csproj" />
-    </ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <AssemblyName>DXHRDCHudScaler.Core.Tests</AssemblyName>
+    <RootNamespace>DXHRDCHudScaler.Core.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="NUnit" Version="4.4.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.10.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DXHRDCHudScaler.Core\DXHRDCHudScaler.Core.csproj" />
+  </ItemGroup>
 </Project>

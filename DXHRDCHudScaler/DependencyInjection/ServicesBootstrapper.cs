@@ -2,10 +2,12 @@
 using DXHRDCHudScaler.Core.Models;
 using DXHRDCHudScaler.Core.Services;
 using DXHRDCHudScaler.Core.Services.BackupService;
+using DXHRDCHudScaler.Core.Services.FindDXHRDCExeService;
+using DXHRDCHudScaler.Core.Services.GetGameRenderResolutionServiceService;
+using DXHRDCHudScaler.Core.Services.ResolutionService;
 // using DXHRDCHudScaler.Core.Services.SimplePatchService;
 using DXHRDCHudScaler.Core.Services.UiScalePatchService;
 using DXHRDCHudScaler.Core.Services.UninstallService;
-using DXHRDCHudScaler.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DXHRDCHudScaler.DependencyInjection;
@@ -31,22 +33,22 @@ public static class ServicesBootstrapper
     {
         if (OperatingSystem.IsWindows() && OperatingSystem.IsWindowsVersionAtLeast(5))
         {
-            services.AddScoped<IResolutionService, DXHRDCHudScaler.Windows.ResolutionService>();
+            services.AddScoped<IResolutionService, ResolutionServiceWin>();
             services.AddScoped<
                 IGetGameRenderResolutionService,
-                GetGameRenderResolutionServiceService
+                GetGameRenderResolutionServiceServiceWin
             >();
-            services.AddScoped<IFindDxhrdcExeService, FindDxhrdcExeService>();
+            services.AddScoped<IFindDxhrdcExeService, FindDxhrdcExeServiceWin>();
         }
         else if (OperatingSystem.IsMacOS()) { }
         else if (OperatingSystem.IsLinux())
         {
-            services.AddScoped<IResolutionService, DXHRDXHudScaler.Linux.ResolutionService>();
+            services.AddScoped<IResolutionService, ResolutionServiceLinux>();
             services.AddScoped<
                 IGetGameRenderResolutionService,
-                DXHRDXHudScaler.Linux.GetGameRenderResolutionService
+                GetGameRenderResolutionServiceLinux
             >();
-            services.AddScoped<IFindDxhrdcExeService, DXHRDXHudScaler.Linux.FindDXHRDCExeService>();
+            services.AddScoped<IFindDxhrdcExeService, FindDXHRDCExeServiceLinux>();
         }
         else
         {

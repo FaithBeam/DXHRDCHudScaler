@@ -15,7 +15,10 @@
     <AssemblyName>DXHRDC - Hud Scaler</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <NoWarn>1701;1702;IL2121;IL2026;IL2121;IL3050</NoWarn>
+    <NoWarn>1701;1702;IL2121;IL2026;IL2109;IL2121;IL3050</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <NoWarn>1701;1702;IL2121;IL2026;IL2109;IL2121;IL3050</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -41,7 +44,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DXHRDCHudScaler.Core\DXHRDCHudScaler.Core.csproj" />
-    <ProjectReference Include="..\DXHRDCHudScaler.Windows\DXHRDCHudScaler.Windows.csproj" />
-    <ProjectReference Include="..\DXHRDXHudScaler.Linux\DXHRDXHudScaler.Linux.csproj" />
   </ItemGroup>
 </Project>

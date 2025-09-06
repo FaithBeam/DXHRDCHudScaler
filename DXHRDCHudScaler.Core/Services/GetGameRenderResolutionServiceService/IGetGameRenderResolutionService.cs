@@ -1,6 +1,6 @@
 using DXHRDCHudScaler.Core.Models;
 
-namespace DXHRDCHudScaler.Core.Services;
+namespace DXHRDCHudScaler.Core.Services.GetGameRenderResolutionServiceService;
 
 public interface IGetGameRenderResolutionService
 {

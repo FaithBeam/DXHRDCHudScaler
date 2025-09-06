@@ -1,12 +1,11 @@
 ﻿using System.Runtime.Versioning;
 using DXHRDCHudScaler.Core.Models;
-using DXHRDCHudScaler.Core.Services;
 using Microsoft.Win32;
 
-namespace DXHRDCHudScaler.Windows;
+namespace DXHRDCHudScaler.Core.Services.GetGameRenderResolutionServiceService;
 
 [SupportedOSPlatform("windows")]
-public class GetGameRenderResolutionServiceService : IGetGameRenderResolutionService
+public class GetGameRenderResolutionServiceServiceWin : IGetGameRenderResolutionService
 {
     public bool TryGetGameResolution(out Resolution? resolution)
     {

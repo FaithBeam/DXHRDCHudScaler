@@ -1,9 +1,8 @@
 using DXHRDCHudScaler.Core.Models;
-using DXHRDCHudScaler.Core.Services;
 
-namespace DXHRDXHudScaler.Linux;
+namespace DXHRDCHudScaler.Core.Services.GetGameRenderResolutionServiceService;
 
-public class GetGameRenderResolutionService : IGetGameRenderResolutionService
+public class GetGameRenderResolutionServiceLinux : IGetGameRenderResolutionService
 {
     public bool TryGetGameResolution(out Resolution? resolution)
     {

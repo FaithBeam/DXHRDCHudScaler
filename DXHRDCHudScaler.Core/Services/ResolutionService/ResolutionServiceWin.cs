@@ -1,19 +1,18 @@
 ﻿using System.Runtime.Versioning;
 using DXHRDCHudScaler.Core.Models;
-using DXHRDCHudScaler.Core.Services;
 using DynamicData;
 using Windows.Win32;
 using Windows.Win32.Graphics.Gdi;
 
-namespace DXHRDCHudScaler.Windows;
+namespace DXHRDCHudScaler.Core.Services.ResolutionService;
 
 [SupportedOSPlatform("windows5.0")]
-public class ResolutionService : IResolutionService
+public class ResolutionServiceWin : IResolutionService
 {
     private static long _id;
     private readonly SourceCache<Resolution, long> _resolutionSourceCache = new(x => x.Id);
 
-    public ResolutionService()
+    public ResolutionServiceWin()
     {
         GetResolutions();
         GetCurrentDesktopResolution();
