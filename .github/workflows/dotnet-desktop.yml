@@ -10,14 +10,15 @@ jobs:
   build:
     strategy:
       matrix: 
-        os: 
-          - name: ubuntu-latest
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
             rid: linux-x64
             pkgRid: linux.x64
-          - name: windows-latest
+          - os: windows-latest
             rid: win-x64
             pkgRid: win.x64
-    runs-on: ${{ matrix.os.name }}
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -42,10 +43,10 @@ jobs:
 
     - name: dotnet publish
       run: |
-        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -r ${{ matrix.os.rid }} -p:Version=${{ steps.gitversion.outputs.SemVer }} -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }}
+        dotnet publish DXHRDCHudScaler/DXHRDCHudScaler.csproj -c Release -o bin -r ${{ matrix.rid }} -p:Version=${{ steps.gitversion.outputs.SemVer }} -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }}
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
-        name: DXHRDC-HudScaler.${{ steps.gitversion.outputs.semVer }}+${{ matrix.os.pkgRid }}
+        name: DXHRDC-HudScaler.${{ steps.gitversion.outputs.semVer }}+${{ matrix.pkgRid }}
         path: bin
