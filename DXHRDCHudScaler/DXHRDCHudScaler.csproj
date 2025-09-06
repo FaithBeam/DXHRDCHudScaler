@@ -12,7 +12,7 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <ApplicationIcon>Assets\dxhrdc-icon.ico</ApplicationIcon>
-    <AssemblyName>DXHRDC - Hud Scaler</AssemblyName>
+    <AssemblyName>DXHRDC-HudScaler</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <NoWarn>1701;1702;IL2121;IL2026;IL2109;IL2121;IL3050</NoWarn>
